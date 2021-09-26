@@ -3,6 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Form from './form';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
 
 export default function App() {
   return (
@@ -10,26 +18,13 @@ export default function App() {
       <Form
         title="MyForm"
         lineNames={[
-          "FirstName",
-          "LastName",
-          "BirthDate",
-          "Salary",
-          "Social Security"
+          "First Name",
+          "Last Name",
+          "Social Security",
+          "Phone",
+          "Email"
         ]}
-        style={styles.form}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  form: {
-    padding: 10
-  }
-});
