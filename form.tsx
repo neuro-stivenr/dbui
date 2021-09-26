@@ -6,9 +6,25 @@ import { pathToFileURL } from 'url';
 
 const styles = StyleSheet.create({
   inputLine: {
-    padding: 10,
-    margin: 10,
+    padding: '10%',
+    margin: '10%',
     borderBottomWidth: 1
+  },
+  inputLineContainer: {
+      borderWidth: 0
+  },
+  formContainer: {
+      borderWidth: 3
+  },
+  formTitle: {
+    textAlign: "center",
+    fontSize: 30,
+    fontFamily: "Helvetica",
+    padding: '10%',
+    borderBottomWidth: 2
+  },
+  formFieldsContainer: {
+      padding: 2
   }
 });
 
@@ -42,7 +58,7 @@ const stateToProp = (state:FormState):InputLineProps => {
 
 const InputLine = (props:InputLineProps) => {
     return (
-        <View>
+        <View style={styles.inputLineContainer}>
             <TextInput
                 style={styles.inputLine}
                 placeholder={props.title}
@@ -63,21 +79,30 @@ export default function Form(props:FormProps):JSX.Element {
     const formState: Array<FormState> = props.lineNames.map(name => {
         return useFormState(name)
     })
-    const submitForm = () => {
-        console.log(formState)
+    const submitForm = async () => {
+        let payload:any = {}
+        formState.forEach(entry => {
+            payload[entry['title']] = entry.state
+        })
+        const response = await fetch('http://localhost:5000/api/test', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'no-cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(payload) // body data type must match "Content-Type" header
+        });
+        console.log(response)
     }
     return (
-        <View style={{
-            borderWidth: 3
-        }}>
-            <Text style={{
-                textAlign: "center",
-                fontSize: 30,
-                fontFamily: "Helvetica",
-                padding: 10,
-                borderBottomWidth: 2
-            }}>{props.title}</Text>
-            <ScrollView>
+        <View style={styles.formContainer}>
+            <Text style={styles.formTitle}>{props.title}</Text>
+            <ScrollView style={styles.formFieldsContainer}>
                 { // Array of input lines  
                     formState.map(stateToProp).map(prop => {
                         return <InputLine {...prop}/>

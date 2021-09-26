@@ -22,7 +22,8 @@ export default function App() {
           "Last Name",
           "Social Security",
           "Phone",
-          "Email"
+          "Email",
+          "ID"
         ]}
       />
     </View>
