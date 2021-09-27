@@ -6,21 +6,21 @@ import { pathToFileURL } from 'url';
 
 const styles = StyleSheet.create({
   inputLine: {
-    padding: '10%',
-    margin: '10%',
-    borderBottomWidth: 1
+    padding: '3%',
+    margin: '3%',
+    borderBottomWidth: 0
   },
   inputLineContainer: {
       borderWidth: 0
   },
   formContainer: {
-      borderWidth: 3
+      borderWidth: 0
   },
   formTitle: {
     textAlign: "center",
     fontSize: 30,
     fontFamily: "Helvetica",
-    padding: '10%',
+    padding: '15%',
     borderBottomWidth: 2
   },
   formFieldsContainer: {
@@ -73,7 +73,6 @@ interface FormProps {
     lineNames: Array<string>;
 }
 
-
 export default function Form(props:FormProps):JSX.Element {
     const numLines: number = props.lineNames.length
     const formState: Array<FormState> = props.lineNames.map(name => {
@@ -84,18 +83,14 @@ export default function Form(props:FormProps):JSX.Element {
         formState.forEach(entry => {
             payload[entry['title']] = entry.state
         })
+        console.log(JSON.stringify(payload))
         const response = await fetch('http://localhost:5000/api/test', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'no-cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+            body: JSON.stringify(payload), // body data type must match "Content-Type" header
+            mode: 'cors',
             headers: {
-              'Content-Type': 'application/json'
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(payload) // body data type must match "Content-Type" header
+                'Content-Type': 'application/json',
+            }
         });
         console.log(response)
     }

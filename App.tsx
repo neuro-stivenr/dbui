@@ -18,12 +18,12 @@ export default function App() {
       <Form
         title="MyForm"
         lineNames={[
-          "First Name",
-          "Last Name",
-          "Social Security",
-          "Phone",
-          "Email",
-          "ID"
+          "ss",
+          "firstname",
+          "lastname",
+          "birthdate",
+          "phone",
+          "email"
         ]}
       />
     </View>
